@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - BUGATTI Store</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="checkout.css">
+</head>
+<body>
+  <div class="checkout-layout">
+    <!-- LEFT COLUMN: Checkout Form -->
+    <main class="checkout-main">
+      <div class="checkout-header">
+        <a href="index.html" class="logo">BUGATTI</a>
+        <a href="index.html" class="cart-bag-icon" title="Return to store">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+        </a>
+      </div>
+
+      <!-- Express Checkout -->
+      <section class="express-checkout-section">
+        <div class="express-title">Express checkout</div>
+        <div class="express-buttons">
+          <button class="btn-express btn-shop">
+            <span>shop</span>
+          </button>
+          <button class="btn-express btn-gpay">
+            <svg width="42" height="18" viewBox="0 0 42 18">
+              <path fill="#4285F4" d="M6.22 8.41v2.54h3.81c-.16 1.04-1.21 3.03-3.81 3.03-2.29 0-4.16-1.9-4.16-4.24s1.87-4.24 4.16-4.24c1.3 0 2.18.55 2.68 1.03l2.02-1.95C9.64 3.39 8.1 2.7 6.22 2.7 2.78 2.7 0 5.48 0 8.9s2.78 6.2 6.22 6.2c3.59 0 5.97-2.52 5.97-6.07 0-.41-.04-.72-.1-.99H6.22z"/>
+              <path fill="#EA4335" d="M17.8 7.42c-1.12 0-2.02.85-2.02 2.05 0 1.18.9 2.05 2.02 2.05.62 0 1.25-.31 1.55-.78v.63c0 1.25-.76 1.93-1.85 1.93-.89 0-1.45-.63-1.67-1.17l-1.78.74c.51 1.22 1.86 2.36 3.45 2.36 2.01 0 3.7-1.18 3.7-4.12V5.62h-1.91v.78c-.35-.44-.95-.98-1.49-.98zm.22 1.63c.64 0 1.23.53 1.23 1.25 0 .73-.59 1.24-1.23 1.24-.65 0-1.25-.51-1.25-1.24 0-.74.6-1.25 1.25-1.25z"/>
+              <path fill="#FBBC05" d="M25.3 5.62h-2.1v9.23h2.1V5.62z"/>
+              <path fill="#34A853" d="M31.2 7.42c-1.17 0-2.14.93-2.14 2.05 0 1.11.96 2.05 2.14 2.05 1.14 0 1.81-.78 2.05-1.34l-1.73-.72c-.14.3-.43.71-.98.71-.56 0-1.02-.32-1.21-.77l3.96-1.64-.19-.44c-.35-.95-1.44-2.61-3.66-2.61zm.08 1.59c.43 0 .75.22.88.51l-2.09.87c.01-.73.53-1.38 1.21-1.38z"/>
+            </svg>
+            <span class="gpay-text">Pay</span>
+          </button>
+        </div>
+        <div class="divider">
+          <span>OR</span>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="checkout-section">
+        <div class="section-header">
+          <h2>Contact</h2>
+          <a href="#" class="link-signin">Sign in</a>
+        </div>
+        <div class="input-field">
+          <input type="email" id="email" placeholder="Email" required>
+          <span class="field-icon-help">?</span>
+        </div>
+        <label class="checkbox-label">
+          <input type="checkbox" checked>
+          <span>Email me with news and offers</span>
+        </label>
+      </section>
+
+      <!-- Delivery -->
+      <section class="checkout-section">
+        <h2>Delivery</h2>
+        <div class="input-field">
+          <select id="country">
+            <option value="UK">United Kingdom</option>
+            <option value="US">United States</option>
+            <option value="FR">France</option>
+            <option value="DE">Germany</option>
+            <option value="VN">Vietnam</option>
+          </select>
+          <label class="floating-label">Country/Region</label>
+        </div>
+
+        <div class="input-grid">
+          <div class="input-field">
+            <input type="text" placeholder="First name (optional)">
+          </div>
+          <div class="input-field">
+            <input type="text" placeholder="Last name" required>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input type="text" placeholder="Address" required>
+          <span class="field-icon-search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+        </div>
+
+        <div class="input-field">
+          <input type="text" placeholder="Apartment, suite, etc. (optional)">
+        </div>
+
+        <div class="input-grid">
+          <div class="input-field">
+            <input type="text" placeholder="City" required>
+          </div>
+          <div class="input-field">
+            <input type="text" placeholder="Postcode" required>
+          </div>
+        </div>
+
+        <div class="input-field">
+          <input type="tel" placeholder="Phone" required>
+          <span class="field-icon-help">?</span>
+        </div>
+
+        <label class="checkbox-label">
+          <input type="checkbox">
+          <span>Text me with news and offers</span>
+        </label>
+      </section>
+
+      <!-- Shipping Method -->
+      <section class="checkout-section">
+        <h2>Shipping method</h2>
+        <div class="shipping-placeholder">
+          Enter your shipping address to view available shipping methods.
+        </div>
+      </section>
+
+      <!-- Payment -->
+      <section class="checkout-section">
+        <h2>Payment</h2>
+        <p class="section-subtext">All transactions are secure and encrypted.</p>
+
+        <div class="payment-options">
+          <!-- Credit Card Option -->
+          <div class="payment-accordion-item active">
+            <label class="payment-header">
+              <div class="payment-radio-title">
+                <input type="radio" name="payment_method" value="credit_card" checked>
+                <span>Credit card</span>
+              </div>
+              <div class="payment-brand-icons">
+                <span class="card-badge visa">VISA</span>
+                <span class="card-badge mc">mastercard</span>
+                <span class="card-badge extra">+5</span>
+              </div>
+            </label>
+
+            <div class="payment-body">
+              <div class="input-field">
+                <input type="text" placeholder="Card number" required>
+                <span class="field-icon-lock">🔒</span>
+              </div>
+              <div class="input-grid">
+                <div class="input-field">
+                  <input type="text" placeholder="Expiration date (MM / YY)" required>
+                </div>
+                <div class="input-field">
+                  <input type="text" placeholder="Security code" required>
+                  <span class="field-icon-help">?</span>
+                </div>
+              </div>
+              <div class="input-field">
+                <input type="text" placeholder="Name on card" required>
+              </div>
+
+              <label class="checkbox-label">
+                <input type="checkbox" checked>
+                <span>Use shipping address as billing address</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Klarna Option -->
+          <div class="payment-accordion-item">
+            <label class="payment-header">
+              <div class="payment-radio-title">
+                <input type="radio" name="payment_method" value="klarna">
+                <span>Klarna</span>
+              </div>
+              <div class="payment-brand-icons">
+                <span class="card-badge klarna">Klarna.</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- PayPal Option -->
+          <div class="payment-accordion-item">
+            <label class="payment-header">
+              <div class="payment-radio-title">
+                <input type="radio" name="payment_method" value="paypal">
+                <span>PayPal</span>
+              </div>
+              <div class="payment-brand-icons">
+                <span class="card-badge paypal">PayPal</span>
+              </div>
+            </label>
+          </div>
+
+          <!-- Crypto.com Pay Option -->
+          <div class="payment-accordion-item">
+            <label class="payment-header">
+              <div class="payment-radio-title">
+                <input type="radio" name="payment_method" value="crypto">
+                <span>Crypto.com Pay</span>
+              </div>
+              <div class="payment-brand-icons">
+                <span class="crypto-icon btc">₿</span>
+                <span class="crypto-icon eth">Ξ</span>
+                <span class="crypto-icon usdc">$</span>
+                <span class="card-badge extra">+2</span>
+              </div>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- Save Info & Pay Now -->
+      <section class="checkout-section footer-actions">
+        <div class="save-info-header">
+          <span>Save my information for a faster checkout</span>
+          <a href="#" class="link-notnow">Not now</a>
+        </div>
+        <p class="terms-text">By paying, you agree to create a Shop account subject to Shop's <a href="#">Terms</a> and <a href="#">Privacy Policy</a></p>
+
+        <button class="btn-pay-now" id="pay-now-btn">Pay now</button>
+
+        <footer class="policy-links">
+          <a href="#">Refund policy</a>
+          <a href="#">Shipping</a>
+          <a href="#">Privacy policy</a>
+          <a href="#">Terms of service</a>
+          <a href="#">Contact</a>
+        </footer>
+      </section>
+    </main>
+
+    <!-- RIGHT COLUMN: Order Summary Side Panel -->
+    <aside class="checkout-sidebar">
+      <div class="sidebar-inner">
+        <!-- Order Items List -->
+        <div class="summary-items-list" id="summary-items-list">
+          <div class="summary-item">
+            <div class="summary-thumb-box">
+              <img src="assets/lego_bugatti.jpg" alt="LEGO Technic Bugatti Chiron Pur Sport">
+              <span class="summary-badge">1</span>
+            </div>
+            <div class="summary-item-title">
+              LEGO ® Technic ™ Bugatti Chiron Pur Sport
+            </div>
+            <div class="summary-item-price">£70.00</div>
+          </div>
+        </div>
+
+        <!-- Discount Code Input -->
+        <div class="discount-wrapper">
+          <input type="text" id="discount-code" placeholder="Discount code or gift card">
+          <button class="btn-apply-discount" id="btn-apply-discount">Apply</button>
+        </div>
+
+        <!-- Cost Breakdown -->
+        <div class="cost-breakdown">
+          <div class="cost-row">
+            <span>Subtotal</span>
+            <span class="cost-val" id="summary-subtotal">£70.00</span>
+          </div>
+          <div class="cost-row">
+            <span class="shipping-label-wrapper">
+              Shipping <span class="field-icon-help">?</span>
+            </span>
+            <span class="cost-subtext">Enter shipping address</span>
+          </div>
+        </div>
+
+        <div class="total-row">
+          <div class="total-label-box">
+            <span class="total-title">Total</span>
+            <span class="tax-note" id="tax-note">Including £11.67 in taxes</span>
+          </div>
+          <div class="total-amount">
+            <span class="currency-code">GBP</span>
+            <span class="total-val" id="summary-total">£70.00</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+  </div>
+
+  <script src="checkout.js"></script>
+</body>
+</html>

@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BUGATTI STORE | Official Store</title>
+  <meta name="description" content="Shop official Bugatti model cars, apparel, technology, and lifestyle accessories.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@500;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-container">
+      <a href="#" class="logo" id="brand-logo">BUGATTI</a>
+      
+      <nav class="nav-menu">
+        <div class="nav-main">
+          <a href="#" class="nav-link active" data-category="all">ALL PRODUCTS</a>
+          <a href="#" class="nav-link" data-category="tech">TECH</a>
+          <a href="#" class="nav-link" data-category="models">MODEL CARS</a>
+          <a href="#" class="nav-link" data-category="clothing">CLOTHING</a>
+          <a href="#" class="nav-link" data-category="accessories">ACCESSORIES</a>
+          <a href="#" class="nav-link" data-category="lifestyle">EXCLUSIVE LIFESTYLE</a>
+        </div>
+        <div class="nav-sub">
+          <a href="#" class="nav-link sale-link" data-category="sale">ARCHIVE SALE</a>
+        </div>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-btn" id="search-btn" title="Search" aria-label="Search">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+        </button>
+        <button class="icon-btn" id="account-btn" title="Account" aria-label="Account">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+        </button>
+        <button class="icon-btn cart-toggle-btn" id="cart-icon-btn" title="View Cart" aria-label="View Cart">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <path d="M16 10a4 4 0 0 1-8 0"></path>
+          </svg>
+          <span class="cart-badge" id="cart-badge-count">1</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- SEARCH OVERLAY -->
+  <div class="search-overlay" id="search-overlay">
+    <div class="search-modal">
+      <div class="search-input-wrapper">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="search-input" placeholder="Search Bugatti store products..." autocomplete="off">
+        <button class="close-search-btn" id="close-search-btn">&times;</button>
+      </div>
+      <div class="search-results" id="search-results"></div>
+    </div>
+  </div>
+
+  <!-- MAIN CATALOG -->
+  <main class="main-content">
+    <div class="container">
+      <div class="products-grid" id="products-grid">
+        <!-- Dynamic Product Cards Injected Here -->
+      </div>
+    </div>
+  </main>
+
+  <!-- CART OVERLAY / BACKDROP -->
+  <div class="cart-backdrop" id="cart-backdrop"></div>
+
+  <!-- CART DRAWER -->
+  <aside class="cart-drawer" id="cart-drawer">
+    <!-- Header -->
+    <div class="cart-drawer-header">
+      <div class="cart-tabs">
+        <button class="cart-tab active" id="tab-cart">Cart<sup class="cart-sup" id="cart-tab-count">1</sup></button>
+        <button class="cart-tab muted" id="tab-recent">Recently viewed</button>
+      </div>
+      <button class="close-drawer-btn" id="close-cart-btn" aria-label="Close Cart">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+
+    <!-- Free Shipping Progress -->
+    <div class="shipping-banner">
+      <div class="shipping-text" id="shipping-text-desc">
+        Spend <span class="highlight-price" id="shipping-needed-amount">£130.00</span> more to reach free shipping!
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" id="shipping-progress-bar" style="width: 35%;"></div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Cart List -->
+    <div class="cart-tab-content active" id="cart-content-view">
+      <div class="cart-items-list" id="cart-items-list">
+        <!-- Cart Items Injected Here -->
+      </div>
+
+      <!-- Drawer Footer -->
+      <div class="cart-drawer-footer">
+        <div class="cart-action-tools">
+          <button class="action-tool-btn" id="btn-order-note">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>Order note</span>
+          </button>
+          <button class="action-tool-btn" id="btn-shipping">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <span>Shipping</span>
+          </button>
+          <button class="action-tool-btn" id="btn-discount">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="19" y1="5" x2="5" y2="19"></line>
+              <circle cx="6.5" cy="6.5" r="2.5"></circle>
+              <circle cx="17.5" cy="17.5" r="2.5"></circle>
+            </svg>
+            <span>Discount</span>
+          </button>
+        </div>
+
+        <div class="summary-line">
+          <div class="tax-info">
+            Tax included. <a href="#" class="underline-link">Shipping</a> calculated at checkout.
+          </div>
+          <div class="subtotal-info">
+            <span class="subtotal-label">Subtotal</span>
+            <span class="subtotal-value" id="cart-subtotal-price">£70.00 GBP</span>
+          </div>
+        </div>
+
+        <div class="cart-footer-buttons">
+          <button class="btn btn-checkout" id="checkout-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="lock-icon">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+            </svg>
+            Check out
+          </button>
+          <button class="btn btn-view-cart" id="view-cart-page-btn">View cart</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Content: Recently Viewed -->
+    <div class="cart-tab-content" id="recent-content-view" style="display: none;">
+      <div class="recent-items-grid" id="recent-items-grid">
+        <!-- Recently viewed items -->
+      </div>
+    </div>
+  </aside>
+
+  <!-- QUICK VIEW PRODUCT MODAL -->
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="product-modal" id="product-modal">
+    <button class="close-modal-btn" id="close-modal-btn">&times;</button>
+    <div class="modal-body" id="modal-body">
+      <!-- Injected Product Details -->
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-notification" id="toast-notification">
+    <span class="toast-message" id="toast-message">Item added to cart</span>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
