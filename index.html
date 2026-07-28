@@ -146,6 +146,56 @@
           </button>
         </div>
 
+        <!-- ORDER NOTE PANEL -->
+        <div class="cart-panel" id="panel-order-note">
+          <div class="cart-panel-inner">
+            <label class="panel-label">Add a note to your order</label>
+            <textarea class="cart-note-textarea" id="order-note-textarea" placeholder="Gift message, special instructions..." maxlength="500"></textarea>
+            <div class="panel-row-end">
+              <span class="note-char-count" id="note-char-count">0 / 500</span>
+              <button class="btn-panel-save" id="save-note-btn">Save note</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHIPPING CALCULATOR PANEL -->
+        <div class="cart-panel" id="panel-shipping">
+          <div class="cart-panel-inner">
+            <label class="panel-label">Estimate shipping</label>
+            <div class="shipping-fields">
+              <div class="shipping-field-group">
+                <select class="panel-select" id="shipping-country">
+                  <option value="">Select country…</option>
+                  <option value="UK">🇬🇧 United Kingdom</option>
+                  <option value="EU_CLOSE">🇫🇷 France / Germany / Spain</option>
+                  <option value="EU_FAR">🇵🇱 Eastern Europe</option>
+                  <option value="US">🇺🇸 United States</option>
+                  <option value="CA">🇨🇦 Canada</option>
+                  <option value="AU">🇦🇺 Australia</option>
+                  <option value="OTHER">🌍 Rest of world</option>
+                </select>
+              </div>
+              <div class="shipping-field-group">
+                <input type="text" class="panel-input" id="shipping-postcode" placeholder="City or postcode (e.g. SW1A 1AA)">
+              </div>
+            </div>
+            <button class="btn-panel-calc" id="btn-calc-shipping">Calculate</button>
+            <div class="shipping-result" id="shipping-result"></div>
+          </div>
+        </div>
+
+        <!-- DISCOUNT PANEL -->
+        <div class="cart-panel" id="panel-discount">
+          <div class="cart-panel-inner">
+            <label class="panel-label">Discount code</label>
+            <div class="discount-input-row">
+              <input type="text" class="panel-input discount-code-input" id="discount-code-input" placeholder="Enter code…" autocomplete="off">
+              <button class="btn-panel-apply" id="btn-apply-discount">Apply</button>
+            </div>
+            <div class="discount-result" id="discount-result"></div>
+          </div>
+        </div>
+
         <div class="summary-line">
           <div class="tax-info">
             Tax included. <a href="#" class="underline-link">Shipping</a> calculated at checkout.

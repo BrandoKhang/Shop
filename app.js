@@ -224,18 +224,201 @@ document.addEventListener('DOMContentLoaded', () => {
     renderRecentlyViewed();
   });
 
-  // Action Tools (Order Note, Shipping, Discount)
-  document.getElementById('btn-order-note').addEventListener('click', () => {
-    showToast('Order note modal opened');
-  });
-  document.getElementById('btn-shipping').addEventListener('click', () => {
-    showToast('Shipping calculator opened');
-  });
-  document.getElementById('btn-discount').addEventListener('click', () => {
-    showToast('Enter discount code');
+  // ============================================================
+  // ACTION PANELS — Order Note / Shipping / Discount
+  // ============================================================
+
+  let activePanel = null; // tracks which panel is open
+  let appliedDiscount = null; // { code, type, value, label }
+  let orderNote = '';
+
+  // --- SHIPPING DATA ---
+  const SHIPPING_RATES = {
+    UK: [
+      { method: 'Standard Delivery',  days: '2–4 business days',  price: 'Free over £200 · else £5.99' },
+      { method: 'Express Delivery',   days: '1–2 business days',  price: '£12.99' },
+      { method: 'Next Day (pre-2pm)', days: '1 business day',     price: '£18.99' }
+    ],
+    EU_CLOSE: [
+      { method: 'Standard EU',        days: '5–8 business days',  price: 'Free over £200 · else £9.99' },
+      { method: 'Express EU',         days: '3–5 business days',  price: '£19.99' }
+    ],
+    EU_FAR: [
+      { method: 'Standard EU',        days: '7–12 business days', price: 'Free over £200 · else £11.99' },
+      { method: 'Express EU',         days: '5–7 business days',  price: '£22.99' }
+    ],
+    US: [
+      { method: 'International',      days: '8–14 business days', price: '£14.99' },
+      { method: 'Express Int\'l',     days: '5–8 business days',  price: '£29.99' }
+    ],
+    CA: [
+      { method: 'International',      days: '9–15 business days', price: '£14.99' },
+      { method: 'Express Int\'l',     days: '6–9 business days',  price: '£29.99' }
+    ],
+    AU: [
+      { method: 'International',      days: '10–18 business days', price: '£16.99' },
+      { method: 'Express Int\'l',     days: '7–10 business days',  price: '£34.99' }
+    ],
+    OTHER: [
+      { method: 'International',      days: '14–21 business days', price: '£19.99' }
+    ]
+  };
+
+  // --- DISCOUNT CODES ---
+  const DISCOUNT_CODES = {
+    'BUGATTI10':  { type: 'percent', value: 10,  label: '10% off your order' },
+    'BUGATTI20':  { type: 'percent', value: 20,  label: '20% off your order' },
+    'WELCOME15':  { type: 'percent', value: 15,  label: '15% welcome discount' },
+    'FREESHIP':   { type: 'shipping', value: 0,  label: 'Free shipping unlocked' },
+    'SAVE50':     { type: 'fixed',   value: 50,  label: '£50 off your order' }
+  };
+
+  // Helper: toggle panel open/close
+  function togglePanel(panelId, btnEl) {
+    const panel = document.getElementById(panelId);
+    const allPanels = document.querySelectorAll('.cart-panel');
+    const allBtns   = document.querySelectorAll('.action-tool-btn');
+
+    const isAlreadyOpen = panel.classList.contains('open');
+
+    // Close all panels & deactivate all buttons
+    allPanels.forEach(p => p.classList.remove('open'));
+    allBtns.forEach(b => b.classList.remove('active'));
+
+    if (!isAlreadyOpen) {
+      panel.classList.add('open');
+      btnEl.classList.add('active');
+      activePanel = panelId;
+    } else {
+      activePanel = null;
+    }
+  }
+
+  // --- ORDER NOTE ---
+  const btnOrderNote = document.getElementById('btn-order-note');
+  const noteTa       = document.getElementById('order-note-textarea');
+  const noteCount    = document.getElementById('note-char-count');
+  const saveNoteBtn  = document.getElementById('save-note-btn');
+
+  btnOrderNote.addEventListener('click', () => {
+    togglePanel('panel-order-note', btnOrderNote);
+    if (document.getElementById('panel-order-note').classList.contains('open')) {
+      setTimeout(() => noteTa.focus(), 350);
+    }
   });
 
-  // Checkout Button
+  noteTa.addEventListener('input', () => {
+    const len = noteTa.value.length;
+    noteCount.textContent = `${len} / 500`;
+    saveNoteBtn.classList.remove('saved');
+    saveNoteBtn.textContent = 'Save note';
+  });
+
+  saveNoteBtn.addEventListener('click', () => {
+    orderNote = noteTa.value.trim();
+    saveNoteBtn.textContent = '✓ Saved';
+    saveNoteBtn.classList.add('saved');
+    if (orderNote) showToast('Order note saved');
+  });
+
+  // --- SHIPPING CALCULATOR ---
+  const btnShipping     = document.getElementById('btn-shipping');
+  const calcBtn         = document.getElementById('btn-calc-shipping');
+  const shippingResult  = document.getElementById('shipping-result');
+
+  btnShipping.addEventListener('click', () => {
+    togglePanel('panel-shipping', btnShipping);
+  });
+
+  calcBtn.addEventListener('click', () => {
+    const country  = document.getElementById('shipping-country').value;
+    const postcode = document.getElementById('shipping-postcode').value.trim();
+
+    if (!country) {
+      shippingResult.className = 'shipping-result error';
+      shippingResult.textContent = '⚠ Please select a country first.';
+      return;
+    }
+
+    const rates = SHIPPING_RATES[country];
+    const locationLabel = postcode ? ` to <strong>${postcode.toUpperCase()}</strong>` : '';
+
+    shippingResult.className = 'shipping-result has-result';
+    shippingResult.innerHTML = `
+      <div class="result-title">Estimated delivery${postcode ? ' to ' + postcode.toUpperCase() : ''}</div>
+      ${rates.map(r => `
+        <div class="result-row">
+          <span class="result-method">${r.method}</span>
+          <span class="result-time">${r.days}</span>
+          <span class="result-price">${r.price}</span>
+        </div>
+      `).join('')}
+    `;
+  });
+
+  // Allow pressing Enter in postcode field to trigger calculate
+  document.getElementById('shipping-postcode').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') calcBtn.click();
+  });
+
+  // --- DISCOUNT CODE ---
+  const btnDiscount       = document.getElementById('btn-discount');
+  const discountInput     = document.getElementById('discount-code-input');
+  const applyDiscountBtn  = document.getElementById('btn-apply-discount');
+  const discountResult    = document.getElementById('discount-result');
+
+  btnDiscount.addEventListener('click', () => {
+    togglePanel('panel-discount', btnDiscount);
+    if (document.getElementById('panel-discount').classList.contains('open')) {
+      setTimeout(() => discountInput.focus(), 350);
+    }
+  });
+
+  function applyDiscount() {
+    const code = discountInput.value.trim().toUpperCase();
+    if (!code) {
+      discountResult.className = 'discount-result error';
+      discountResult.textContent = '⚠ Please enter a discount code.';
+      return;
+    }
+
+    if (DISCOUNT_CODES[code]) {
+      appliedDiscount = { code, ...DISCOUNT_CODES[code] };
+      discountResult.className = 'discount-result success';
+      discountResult.innerHTML = `✓ <strong>${code}</strong> — ${appliedDiscount.label}`;
+      discountInput.disabled = true;
+      applyDiscountBtn.textContent = 'Remove';
+      applyDiscountBtn.onclick = removeDiscount;
+      renderCartDrawer(); // recalculate subtotal with discount
+      showToast(`Discount applied: ${appliedDiscount.label}`);
+    } else {
+      appliedDiscount = null;
+      discountResult.className = 'discount-result error';
+      discountResult.textContent = '✕ Invalid code. Try BUGATTI10, BUGATTI20, FREESHIP or SAVE50.';
+    }
+  }
+
+  function removeDiscount() {
+    appliedDiscount = null;
+    discountInput.value = '';
+    discountInput.disabled = false;
+    discountResult.className = 'discount-result';
+    discountResult.textContent = '';
+    applyDiscountBtn.textContent = 'Apply';
+    applyDiscountBtn.onclick = applyDiscount;
+    renderCartDrawer();
+    showToast('Discount removed');
+  }
+
+  applyDiscountBtn.addEventListener('click', applyDiscount);
+  discountInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') applyDiscount();
+  });
+
+  // Expose appliedDiscount to renderCartDrawer scope
+  window._getAppliedDiscount = () => appliedDiscount;
+
+
   document.getElementById('checkout-btn').addEventListener('click', () => {
     if (cart.length === 0) {
       showToast('Your cart is empty');
@@ -357,7 +540,33 @@ function renderCartDrawer() {
 
   badgeCount.textContent = totalCount;
   tabCount.textContent = totalCount;
-  subtotalPriceEl.textContent = `£${subtotal.toFixed(2)} GBP`;
+
+  // Apply discount to displayed subtotal
+  const disc = window._getAppliedDiscount ? window._getAppliedDiscount() : null;
+  let discountedSubtotal = subtotal;
+  let subtotalHTML = '';
+
+  if (disc) {
+    if (disc.type === 'percent') {
+      discountedSubtotal = subtotal * (1 - disc.value / 100);
+    } else if (disc.type === 'fixed') {
+      discountedSubtotal = Math.max(0, subtotal - disc.value);
+    }
+    // 'shipping' type doesn't change subtotal display
+
+    if (disc.type !== 'shipping') {
+      subtotalHTML = `
+        <span style="text-decoration:line-through;color:#6b7280;font-size:13px;font-weight:500;">£${subtotal.toFixed(2)}</span>
+        &nbsp;£${discountedSubtotal.toFixed(2)} GBP
+      `;
+    } else {
+      subtotalHTML = `£${subtotal.toFixed(2)} GBP <span style="color:#86efac;font-size:11px;font-weight:600;margin-left:4px;">FREE SHIP</span>`;
+    }
+  } else {
+    subtotalHTML = `£${subtotal.toFixed(2)} GBP`;
+  }
+
+  subtotalPriceEl.innerHTML = subtotalHTML;
 
   // Free Shipping Progress
   const percent = Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100);
