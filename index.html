@@ -458,6 +458,67 @@
     </div>
   </footer>
 
+  <!-- ORDER HISTORY & TRACKING MODAL -->
+  <div class="orders-backdrop" id="orders-backdrop"></div>
+  <div class="orders-modal" id="orders-modal">
+    <div class="orders-modal-header">
+      <div class="orders-modal-title-box">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+          <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+        <span class="orders-modal-title">Order History &amp; Delivery Tracking</span>
+      </div>
+      <button class="close-orders-btn" id="close-orders-btn">&times;</button>
+    </div>
+
+    <div class="orders-modal-body">
+      <!-- Search & Filters -->
+      <div class="orders-controls-bar">
+        <div class="orders-search-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" id="orders-search-input" placeholder="Search by order ID or product title...">
+        </div>
+        <div class="orders-filter-pills" id="orders-filter-pills">
+          <button class="filter-pill active" data-status="all">All</button>
+          <button class="filter-pill" data-status="processing">Processing</button>
+          <button class="filter-pill" data-status="transit">In Transit</button>
+          <button class="filter-pill" data-status="delivered">Delivered</button>
+        </div>
+      </div>
+
+      <!-- Main Layout: List & Details -->
+      <div class="orders-content-grid">
+        <!-- Left: Order Cards List -->
+        <div class="orders-list-wrapper" id="orders-list-wrapper">
+          <div class="orders-list" id="orders-list">
+            <!-- Dynamic Order Cards Injected Here -->
+          </div>
+        </div>
+
+        <!-- Right: Detailed Delivery Tracking View -->
+        <div class="order-detail-panel" id="order-detail-panel">
+          <div class="detail-empty-state" id="detail-empty-state">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="1" y="3" width="15" height="13"></rect>
+              <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+              <circle cx="5.5" cy="18.5" r="2.5"></circle>
+              <circle cx="18.5" cy="18.5" r="2.5"></circle>
+            </svg>
+            <p>Select an order to view detailed delivery tracking timeline</p>
+          </div>
+
+          <div class="detail-content" id="detail-content" style="display: none;">
+            <!-- Dynamic Order Tracking Stepper & Breakdown Injected Here -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script src="app.js"></script>
 </body>
 </html>

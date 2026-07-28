@@ -211,6 +211,43 @@ document.addEventListener('DOMContentLoaded', () => {
   closeSearchBtn.addEventListener('click', () => searchOverlay.classList.remove('open'));
   searchInput.addEventListener('input', handleSearch);
 
+  // Account Button & Order History Modal Events
+  const accountBtn = document.getElementById('account-btn');
+  if (accountBtn) {
+    accountBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openOrdersModal();
+    });
+  }
+
+  const closeOrdersBtn = document.getElementById('close-orders-btn');
+  const ordersBackdrop = document.getElementById('orders-backdrop');
+  if (closeOrdersBtn) closeOrdersBtn.addEventListener('click', closeOrdersModal);
+  if (ordersBackdrop) ordersBackdrop.addEventListener('click', closeOrdersModal);
+
+  const searchOrdersInput = document.getElementById('orders-search-input');
+  if (searchOrdersInput) {
+    searchOrdersInput.addEventListener('input', () => renderOrdersList());
+  }
+
+  const filterPills = document.querySelectorAll('.filter-pill');
+  filterPills.forEach(pill => {
+    pill.addEventListener('click', () => {
+      filterPills.forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      renderOrdersList();
+    });
+  });
+
+  // Check URL query for order tracking redirect
+  const urlParams = new URLSearchParams(window.location.search);
+  const trackId = urlParams.get('track');
+  if (trackId) {
+    setTimeout(() => {
+      openOrdersModal(trackId);
+    }, 300);
+  }
+
   // Modal Events
   const closeModalBtn = document.getElementById('close-modal-btn');
   const modalBackdrop = document.getElementById('modal-backdrop');
@@ -670,13 +707,41 @@ function renderCartDrawer() {
 
 function renderRecentlyViewed() {
   const grid = document.getElementById('recent-items-grid');
+  if (!grid) return;
+
+  let viewedIds = [];
+  try {
+    const saved = localStorage.getItem('bugatti_recently_viewed');
+    if (saved) viewedIds = JSON.parse(saved);
+  } catch (e) {
+    console.error(e);
+  }
+
+  // Fallback to top products if no recently viewed items yet
+  if (!viewedIds || viewedIds.length === 0) {
+    viewedIds = [PRODUCTS[0].id, PRODUCTS[1].id, PRODUCTS[2].id];
+  }
+
+  const viewedProducts = viewedIds
+    .map(id => PRODUCTS.find(p => p.id === id))
+    .filter(Boolean);
+
+  if (viewedProducts.length === 0) {
+    grid.innerHTML = `
+      <div style="padding: 40px 20px; text-align: center; color: #6b7280; font-size: 13px;">
+        No recently viewed items yet. Explore products to see them here!
+      </div>
+    `;
+    return;
+  }
+
   grid.innerHTML = `
-    <div style="padding: 20px 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
-      ${PRODUCTS.slice(1, 3).map(p => `
-        <div style="background: #121215; padding: 12px; border-radius: 12px; cursor: pointer;" onclick="openQuickViewModalById('${p.id}')">
-          <img src="${p.image}" style="width: 100%; height: 80px; object-fit: contain; background: #e3e4e6; border-radius: 8px; margin-bottom: 8px;">
-          <div style="font-size: 11px; font-weight: 700; color: #fff;">${p.title}</div>
-          <div style="font-size: 11px; color: #3b82f6;">${p.currency}${p.price.toFixed(2)}</div>
+    <div style="padding: 20px 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+      ${viewedProducts.map(p => `
+        <div class="recent-product-card" data-id="${p.id}" style="background: #121217; border: 1px solid rgba(255,255,255,0.08); padding: 12px; border-radius: 12px; cursor: pointer; transition: transform 0.2s, border-color 0.2s;" onclick="openQuickViewModalById('${p.id}')">
+          <img src="${p.image}" alt="${p.title}" style="width: 100%; height: 85px; object-fit: contain; background: #0c0d12; border-radius: 8px; margin-bottom: 8px; padding: 4px;">
+          <div style="font-size: 11px; font-weight: 700; color: #ffffff; line-height: 1.3; height: 28px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">${p.title}</div>
+          <div style="font-size: 12px; font-weight: 700; color: #3b82f6; margin-top: 6px;">${p.currency}${p.price.toFixed(2)}</div>
         </div>
       `).join('')}
     </div>
@@ -722,7 +787,29 @@ function openQuickViewModalById(id) {
   if (prod) openQuickViewModal(prod);
 }
 
+function trackRecentlyViewed(productId) {
+  if (!productId) return;
+  let viewed = [];
+  try {
+    const saved = localStorage.getItem('bugatti_recently_viewed');
+    if (saved) viewed = JSON.parse(saved);
+  } catch (e) {
+    console.error(e);
+  }
+  viewed = viewed.filter(id => id !== productId);
+  viewed.unshift(productId);
+  if (viewed.length > 10) viewed = viewed.slice(0, 10);
+  localStorage.setItem('bugatti_recently_viewed', JSON.stringify(viewed));
+}
+
+function openQuickViewModalById(id) {
+  const prod = PRODUCTS.find(p => p.id === id);
+  if (prod) openQuickViewModal(prod);
+}
+
 function openQuickViewModal(product) {
+  trackRecentlyViewed(product.id);
+
   const modal = document.getElementById('product-modal');
   const backdrop = document.getElementById('modal-backdrop');
   const body = document.getElementById('modal-body');
@@ -805,4 +892,358 @@ function showToast(message) {
   setTimeout(() => {
     toast.classList.remove('show');
   }, 2500);
+}
+
+// ============================================================
+// ORDER HISTORY & DELIVERY TRACKING SYSTEM
+// ============================================================
+
+const DEFAULT_SAMPLE_ORDERS = [
+  {
+    id: 'BUG-849204',
+    date: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    displayDate: '26 Jul 2026, 10:30',
+    customer: {
+      email: 'khang@bugatti-vip.com',
+      name: 'Le Hoang Khang',
+      address: '128 Le Duan, District 1, Ho Chi Minh City, Vietnam',
+      phone: '+84 908 123 456'
+    },
+    items: [
+      { id: 'champagne-chiron', title: 'CHAMPAGNE CARBON FOR BUGATTI — CHIRON EDITION', price: 195.00, currency: '£', image: 'assets/c5_ee7fb0ca-d3d4-4a2a-8bfe-f6fe0a1ae029.webp', quantity: 1 },
+      { id: 'sunglasses-36c-rimless', title: 'BUGATTI EYEWEAR — 36C RIMLESS SILVER BLUE', price: 495.00, currency: '£', image: 'assets/36C-BP-SS_Front.jpg', quantity: 1 }
+    ],
+    financials: { subtotal: 690.00, discount: 69.00, discountCode: 'BUGATTI10', tax: 103.50, total: 621.00 },
+    paymentMethod: 'Credit Card (Visa / MasterCard)',
+    status: 'In Transit',
+    statusText: 'In transit via DHL Express Air Freight',
+    trackingNumber: 'BUG-TRK-882391',
+    carrier: 'DHL Express Luxury Transit',
+    estimatedDelivery: '30 Jul 2026',
+    timeline: [
+      { step: 1, title: 'Order Placed', subtitle: '26 Jul 2026, 10:30', completed: true, active: false, icon: '🛒' },
+      { step: 2, title: 'Payment Confirmed', subtitle: 'Visa payment verified', completed: true, active: false, icon: '💳' },
+      { step: 3, title: 'Packing & Inspection', subtitle: 'Molsheim Logistics Hub, France', completed: true, active: false, icon: '📦' },
+      { step: 4, title: 'In Transit', subtitle: 'DHL Air Freight (Changi - SGN)', completed: false, active: true, icon: '🚚' },
+      { step: 5, title: 'Delivered', subtitle: 'Estimated 30 Jul 2026', completed: false, active: false, icon: '🏠' }
+    ]
+  },
+  {
+    id: 'BUG-721054',
+    date: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000).toISOString(),
+    displayDate: '18 Jul 2026, 15:45',
+    customer: {
+      email: 'khang@bugatti-vip.com',
+      name: 'Le Hoang Khang',
+      address: '128 Le Duan, District 1, Ho Chi Minh City, Vietnam',
+      phone: '+84 908 123 456'
+    },
+    items: [
+      { id: 'lego-chiron', title: 'LEGO ® Technic ™ Bugatti Chiron Pur Sport', price: 70.00, currency: '£', image: 'assets/lego_bugatti.jpg', quantity: 1 }
+    ],
+    financials: { subtotal: 70.00, discount: 0, discountCode: null, tax: 11.67, total: 70.00 },
+    paymentMethod: 'PayPal Express',
+    status: 'Delivered',
+    statusText: 'Order delivered successfully',
+    trackingNumber: 'BUG-TRK-710034',
+    carrier: 'DHL Express Luxury Transit',
+    estimatedDelivery: '22 Jul 2026',
+    timeline: [
+      { step: 1, title: 'Order Placed', subtitle: '18 Jul 2026, 15:45', completed: true, active: false, icon: '🛒' },
+      { step: 2, title: 'Payment Confirmed', subtitle: 'PayPal verified', completed: true, active: false, icon: '💳' },
+      { step: 3, title: 'Packing & Inspection', subtitle: 'Bugatti gift packaging completed', completed: true, active: false, icon: '📦' },
+      { step: 4, title: 'In Transit', subtitle: 'DHL Express hub', completed: true, active: false, icon: '🚚' },
+      { step: 5, title: 'Delivered', subtitle: 'Received by: Le Hoang Khang', completed: true, active: false, icon: '🏠' }
+    ]
+  }
+];
+
+let selectedOrderId = null;
+
+function getOrders() {
+  const saved = localStorage.getItem('bugatti_orders');
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+  localStorage.setItem('bugatti_orders', JSON.stringify(DEFAULT_SAMPLE_ORDERS));
+  return DEFAULT_SAMPLE_ORDERS;
+}
+
+function openOrdersModal(targetOrderId = null) {
+  const modal = document.getElementById('orders-modal');
+  const backdrop = document.getElementById('orders-backdrop');
+  if (!modal || !backdrop) return;
+
+  modal.classList.add('open');
+  backdrop.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  renderOrdersList(targetOrderId);
+}
+
+function closeOrdersModal() {
+  const modal = document.getElementById('orders-modal');
+  const backdrop = document.getElementById('orders-backdrop');
+  if (!modal || !backdrop) return;
+
+  modal.classList.remove('open');
+  backdrop.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderOrdersList(targetOrderId = null) {
+  const orders = getOrders();
+  const listEl = document.getElementById('orders-list');
+  const searchVal = (document.getElementById('orders-search-input')?.value || '').toLowerCase().trim();
+  const activePill = document.querySelector('.filter-pill.active');
+  const filterStatus = activePill ? activePill.getAttribute('data-status') : 'all';
+
+  if (!listEl) return;
+
+  // Filter orders
+  let filtered = orders.filter(order => {
+    const matchesSearch = !searchVal || 
+      order.id.toLowerCase().includes(searchVal) ||
+      (order.trackingNumber && order.trackingNumber.toLowerCase().includes(searchVal)) ||
+      order.items.some(item => item.title.toLowerCase().includes(searchVal));
+
+    let matchesStatus = true;
+    if (filterStatus === 'processing') {
+      matchesStatus = order.status === 'Processing' || order.status === 'Confirmed';
+    } else if (filterStatus === 'transit') {
+      matchesStatus = order.status === 'In Transit' || order.status === 'Shipped';
+    } else if (filterStatus === 'delivered') {
+      matchesStatus = order.status === 'Delivered';
+    }
+
+    return matchesSearch && matchesStatus;
+  });
+
+  if (filtered.length === 0) {
+    listEl.innerHTML = `
+      <div style="text-align:center; padding: 40px 20px; color: #6b7280; font-size: 13px;">
+        No matching orders found.
+      </div>
+    `;
+    document.getElementById('detail-empty-state').style.display = 'flex';
+    document.getElementById('detail-content').style.display = 'none';
+    return;
+  }
+
+  // Select target order or default first order
+  if (targetOrderId) {
+    selectedOrderId = targetOrderId;
+  } else if (!selectedOrderId || !filtered.some(o => o.id === selectedOrderId)) {
+    selectedOrderId = filtered[0].id;
+  }
+
+  listEl.innerHTML = '';
+  filtered.forEach(order => {
+    const card = document.createElement('div');
+    const isSelected = order.id === selectedOrderId;
+    card.className = `order-card ${isSelected ? 'selected' : ''}`;
+
+    let statusClass = 'badge-processing';
+    let statusLabel = 'Processing';
+    if (order.status === 'Confirmed') {
+      statusClass = 'badge-confirmed';
+      statusLabel = 'Confirmed';
+    } else if (order.status === 'In Transit' || order.status === 'Shipped') {
+      statusClass = 'badge-transit';
+      statusLabel = 'In Transit';
+    } else if (order.status === 'Delivered') {
+      statusClass = 'badge-delivered';
+      statusLabel = 'Delivered';
+    }
+
+    card.innerHTML = `
+      <div class="order-card-header">
+        <span class="order-id-tag">#${order.id}</span>
+        <span class="status-badge ${statusClass}">
+          <span class="status-dot"></span>
+          ${statusLabel}
+        </span>
+      </div>
+
+      <div class="order-card-items-preview">
+        ${order.items.map(item => `
+          <img src="${item.image}" alt="${item.title}" class="order-thumb-mini" title="${item.title} (x${item.quantity})">
+        `).join('')}
+      </div>
+
+      <div class="order-card-footer">
+        <span class="order-date-text">${order.displayDate || ''}</span>
+        <span class="order-total-price">${order.items[0]?.currency || '£'}${order.financials?.total.toFixed(2)}</span>
+      </div>
+    `;
+
+    card.addEventListener('click', () => {
+      selectedOrderId = order.id;
+      renderOrdersList(order.id);
+    });
+
+    listEl.appendChild(card);
+  });
+
+  // Render detail for selected order
+  const activeOrder = orders.find(o => o.id === selectedOrderId);
+  if (activeOrder) {
+    renderOrderDetail(activeOrder);
+  }
+}
+
+function renderOrderDetail(order) {
+  const emptyState = document.getElementById('detail-empty-state');
+  const contentEl = document.getElementById('detail-content');
+
+  if (!emptyState || !contentEl) return;
+
+  emptyState.style.display = 'none';
+  contentEl.style.display = 'block';
+
+  let statusClass = 'badge-processing';
+  let statusLabel = 'Processing';
+  if (order.status === 'Confirmed') {
+    statusClass = 'badge-confirmed';
+    statusLabel = 'Payment Confirmed';
+  } else if (order.status === 'In Transit' || order.status === 'Shipped') {
+    statusClass = 'badge-transit';
+    statusLabel = 'In Transit';
+  } else if (order.status === 'Delivered') {
+    statusClass = 'badge-delivered';
+    statusLabel = 'Delivered';
+  }
+
+  // Calculate timeline track fill percentage
+  const completedCount = order.timeline ? order.timeline.filter(t => t.completed).length : 2;
+  const fillPercent = Math.min(100, Math.max(0, ((completedCount - 1) / 4) * 100));
+
+  contentEl.innerHTML = `
+    <!-- Order Header Info Card -->
+    <div class="detail-header-card">
+      <div class="detail-header-top">
+        <div>
+          <div style="font-size: 11px; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Order Details</div>
+          <h3 class="detail-order-title">Order #${order.id}</h3>
+        </div>
+        <span class="status-badge ${statusClass}" style="padding: 6px 14px; font-size: 12px;">
+          <span class="status-dot"></span>
+          ${statusLabel}
+        </span>
+      </div>
+
+      <div class="detail-carrier-box">
+        <div>🚚 Carrier: <strong>${order.carrier || 'DHL Express'}</strong></div>
+        <div>Tracking No: <span class="carrier-code">${order.trackingNumber || 'BUG-TRK-98213'}</span></div>
+      </div>
+    </div>
+
+    <!-- Visual Delivery Tracking Stepper -->
+    <div class="tracking-stepper-container">
+      <div class="stepper-heading">
+        <span>Detailed Delivery Timeline</span>
+        <span class="estimated-date-highlight">Estimated Delivery: ${order.estimatedDelivery || '30 Jul 2026'}</span>
+      </div>
+
+      <div class="stepper-timeline">
+        <div class="stepper-track-bg">
+          <div class="stepper-track-fill" style="width: ${fillPercent}%;"></div>
+        </div>
+
+        ${(order.timeline || []).map(step => `
+          <div class="stepper-step ${step.completed ? 'completed' : ''} ${step.active ? 'active' : ''}">
+            <div class="step-icon-circle">${step.icon || '📦'}</div>
+            <div class="step-title">${step.title}</div>
+            <div class="step-subtitle">${step.subtitle || ''}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+
+    <!-- Product Items Breakdown -->
+    <div class="detail-section-title">Ordered Products</div>
+    <div class="detail-products-list">
+      ${order.items.map(item => `
+        <div class="detail-product-row">
+          <div class="detail-prod-left">
+            <img src="${item.image}" alt="${item.title}" class="detail-prod-img">
+            <div>
+              <div class="detail-prod-name">${item.title}</div>
+              <div class="detail-prod-qty">Quantity: x${item.quantity}</div>
+            </div>
+          </div>
+          <div class="detail-prod-price">${item.currency || '£'}${(item.price * item.quantity).toFixed(2)}</div>
+        </div>
+      `).join('')}
+    </div>
+
+    <!-- Recipient & Payment Summary Grid -->
+    <div class="detail-info-grid">
+      <div class="detail-info-box">
+        <div class="info-box-title">📍 Delivery Address</div>
+        <div class="info-box-content">
+          <strong>${order.customer?.name || 'Valued Customer'}</strong><br>
+          ${order.customer?.address || '10 Molsheim Way, London, SW1A 1AA, United Kingdom'}<br>
+          📞 ${order.customer?.phone || '+44 20 7946 0912'}<br>
+          ✉️ ${order.customer?.email || ''}
+        </div>
+      </div>
+
+      <div class="detail-info-box">
+        <div class="info-box-title">💳 Payment Summary</div>
+        <div class="info-box-content" style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; justify-content: space-between;">
+            <span>Subtotal:</span>
+            <span>${order.items[0]?.currency || '£'}${order.financials?.subtotal.toFixed(2)}</span>
+          </div>
+          ${order.financials?.discount > 0 ? `
+            <div style="display: flex; justify-content: space-between; color: #22c55e;">
+              <span>Discount (${order.financials.discountCode || 'Voucher'}):</span>
+              <span>-${order.items[0]?.currency || '£'}${order.financials.discount.toFixed(2)}</span>
+            </div>
+          ` : ''}
+          <div style="display: flex; justify-content: space-between; color: #6b7280; font-size: 11px;">
+            <span>Included Tax (VAT):</span>
+            <span>${order.items[0]?.currency || '£'}${order.financials?.tax.toFixed(2)}</span>
+          </div>
+          <div style="display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; font-weight: 700; color: #3b82f6; font-size: 15px;">
+            <span>Total:</span>
+            <span>${order.items[0]?.currency || '£'}${order.financials?.total.toFixed(2)}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Re-order Action Button -->
+    <button class="detail-reorder-btn" id="btn-reorder-action">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path>
+      </svg>
+      Re-order Items (Add to Cart)
+    </button>
+  `;
+
+  document.getElementById('btn-reorder-action').addEventListener('click', () => {
+    reorderOrderItems(order.items);
+  });
+}
+
+function reorderOrderItems(items) {
+  if (!items || items.length === 0) return;
+
+  let addedCount = 0;
+  items.forEach(item => {
+    if (addToCart(item.id, item.quantity)) {
+      addedCount += item.quantity;
+    }
+  });
+
+  closeOrdersModal();
+  openCartDrawer();
+  showToast(`🎉 Added ${addedCount} item(s) from past order to cart!`);
 }
