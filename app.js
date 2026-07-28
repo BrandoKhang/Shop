@@ -5,7 +5,7 @@ const PRODUCTS = [
     id: 'lego-chiron',
     brand: 'BUGATTI STORE',
     title: 'LEGO ® Technic ™ Bugatti Chiron Pur Sport',
-    category: 'models',
+    category: 'tech',
     price: 70.00,
     currency: '£',
     image: 'assets/lego_bugatti.jpg',
@@ -44,22 +44,22 @@ const PRODUCTS = [
   {
     id: 'centodieci-white',
     brand: 'BUGATTI STORE',
-    title: 'BUGATTI CENTODIECI SCALE MODEL 1:18 WHITE',
-    category: 'models',
-    price: 85.00,
+    title: 'LEGO ®️ Speed Champions Bugatti Vision Gran Turismo',
+    category: 'tech',
+    price: 35.00,
     currency: '£',
-    image: 'assets/bugatti_chiron.jpg',
-    description: 'Limited edition tribute to the EB110, white metallic 1:18 scale replica with functional doors and detailed engine bay.'
+    image: 'assets/lego-speed-champions-bugatti-vision-gran-turismo.webp',
+    description: 'The Bugatti model car includes details from the vehicle created by Bugatti for the Gran Turismo video game in 2015. This includes a horseshoe front grille, rear wing, distinctive 8-eye headlights, a roof fin and wide tyres imprinted with ‘Michelin’. The toy car also includes a LEGO driver minifigure wearing a Bugatti outfit to place inside the cockpit to enjoy races.'
   },
   {
     id: 'divo-grey',
     brand: 'BUGATTI STORE',
-    title: 'BUGATTI DIVO SCALE MODEL 1:18 MATTE GREY',
+    title: 'BUGATTI DIVO SCALE MODEL 1:18 GREY',
     category: 'models',
     price: 75.00,
     currency: '£',
-    image: 'assets/bugatti_mistral.jpg',
-    description: 'Cornering hypercar scale model featuring custom matte grey paintwork and French tricolor aero wing flags.'
+    image: 'assets/m28_dd0d3d5f-e9b1-4bfe-a4f1-6f757064f0a5.webp',
+    description: 'A highly detailed 1:18 scale diecast model of the Bugatti Divo in grey (approx. 27cm). This replica beautifully recreates the bodywork of the car, with all curves and features exactly where you would find them on the original car.'
   },
   {
     id: 'smartwatch-v1',
@@ -80,6 +80,66 @@ const PRODUCTS = [
     currency: '£',
     image: 'assets/m1_b4a52add-71a6-4115-b8c2-7c3a17861a31.webp',
     description: 'A highly detailed 1:18 scale diecast model of the Bugatti Bolide in blue (approx. 27cm). This replica beautifully recreates the bodywork of the car, with all curves and features exactly where you would find them on the original car.'
+  },
+  {
+    id: 'champagne-chiron',
+    brand: 'BUGATTI STORE',
+    title: 'CHAMPAGNE CARBON FOR BUGATTI — CHIRON EDITION',
+    category: 'accessories',
+    price: 195.00,
+    currency: '£',
+    image: 'assets/c5_ee7fb0ca-d3d4-4a2a-8bfe-f6fe0a1ae029.webp',
+    description: 'Exclusive Champagne Carbon for Bugatti Chiron Edition. A premium collaboration between Champagne Carbon and Bugatti, presented in a sleek carbon-fiber wrapped magnum bottle with signature Bugatti orange accents and luxury gift box.'
+  },
+  {
+    id: 'champagne-bolide',
+    brand: 'BUGATTI STORE',
+    title: 'CHAMPAGNE CARBON FOR BUGATTI — BOLIDE EDITION',
+    category: 'accessories',
+    price: 195.00,
+    currency: '£',
+    image: 'assets/c9_786d28de-c6c0-48cd-9b82-be1dbbf2e496.webp',
+    description: 'Exclusive Champagne Carbon for Bugatti Bolide Edition. A bold blue carbon-fiber wrapped magnum bottle inspired by the Bolide hypercar, part of the prestigious Champagne Carbon x Bugatti collection. Arrives in an elegant black luxury gift box.'
+  },
+  {
+    id: 'navy-blue-tshirt',
+    brand: 'BUGATTI STORE',
+    title: 'BUGATTI LOGO NAVY BLUE T-SHIRT',
+    category: 'clothing',
+    price: 65.00,
+    currency: '£',
+    image: 'assets/navy-blue-t-shirt-bugatti-logo-25-1339.webp',
+    description: 'Premium navy blue cotton T-shirt featuring the iconic Bugatti oval logo in light blue. A timeless wardrobe staple crafted from luxury-grade cotton with a relaxed, comfortable fit — perfect for everyday luxury wear.'
+  },
+  {
+    id: 'bugatti-eb-puffer-jacket',
+    brand: 'BUGATTI STORE',
+    title: 'BUGATTI EB PUFFER JACKET NAVY',
+    category: 'clothing',
+    price: 395.00,
+    currency: '£',
+    image: 'assets/bugatti-eb-puffer-jacket.webp',
+    description: 'The Bugatti EB Puffer Jacket in navy combines performance insulation with signature Bugatti styling. Features a hooded silhouette, quilted body, electric blue zip pullers, and an embroidered EB monogram badge — engineered for those who refuse to compromise on style or warmth.'
+  },
+  {
+    id: 'sunglasses-36c-rimless',
+    brand: 'BUGATTI STORE',
+    title: 'BUGATTI EYEWEAR — 36C RIMLESS SILVER BLUE',
+    category: 'lifestyle',
+    price: 495.00,
+    currency: '£',
+    image: 'assets/36C-BP-SS_Front.jpg',
+    description: 'The Bugatti 36C Rimless Sunglasses in brushed silver and blue are the epitome of understated luxury. Featuring frameless mineral lenses in deep aqua blue, ultra-fine metal bridges, and the discreet Ettore Bugatti signature — a masterpiece of precision optical engineering.'
+  },
+  {
+    id: 'sunglasses-56-14k-gold',
+    brand: 'BUGATTI STORE',
+    title: 'BUGATTI EYEWEAR — 56 AVIATOR 14K GOLD',
+    category: 'lifestyle',
+    price: 795.00,
+    currency: '£',
+    image: 'assets/56-14K_Angle.jpg',
+    description: 'The Bugatti 56 Aviator in 14K gold-plated titanium is crafted for those who demand the extraordinary. Double-bridge aviator silhouette with gradient green lenses and hand-polished gold temple arms — a timeless expression of automotive-inspired haute couture.'
   }
 ];
 
