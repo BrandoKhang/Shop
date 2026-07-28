@@ -857,7 +857,297 @@ button {
   transform: translateX(-50%) translateY(0);
 }
 
-/* RESPONSIVE BREAKPOINTS */
+/* ============================================================
+   SITE FOOTER
+   ============================================================ */
+
+.site-footer {
+  background-color: #000000;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  margin-top: 40px;
+}
+
+/* --- Service Strip --- */
+.footer-service-strip {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 28px 40px;
+  max-width: 1600px;
+  margin: 0 auto;
+  gap: 0;
+}
+
+.footer-service-item {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+}
+
+.footer-service-item:first-child {
+  padding-left: 0;
+}
+
+.footer-service-item:last-child {
+  padding-right: 0;
+}
+
+.footer-service-divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  align-self: stretch;
+  flex-shrink: 0;
+}
+
+.service-icon {
+  color: #ffffff;
+  flex-shrink: 0;
+  opacity: 0.9;
+}
+
+.service-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.service-text strong {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+}
+
+.service-text span {
+  font-size: 12px;
+  color: #9ca3af;
+  line-height: 1.4;
+}
+
+/* --- Footer Main --- */
+.footer-main {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 48px 40px 36px 40px;
+}
+
+.footer-columns {
+  display: grid;
+  grid-template-columns: 200px 200px 1px 1fr;
+  gap: 0 48px;
+  align-items: start;
+  margin-bottom: 48px;
+}
+
+.footer-col-divider {
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  align-self: stretch;
+}
+
+.footer-col-title {
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffffff;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-links a {
+  font-size: 14px;
+  color: #d1d5db;
+  transition: color 0.2s ease;
+  line-height: 1;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+/* Mailing list column */
+.footer-col-wide {
+  padding-left: 8px;
+}
+
+.footer-mailing-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 24px;
+  max-width: 420px;
+}
+
+.footer-email-form {
+  display: flex;
+  align-items: center;
+  background-color: #141416;
+  border: 1px solid #2a2a2e;
+  border-radius: 9999px;
+  padding: 6px 6px 6px 20px;
+  max-width: 420px;
+  gap: 8px;
+}
+
+.footer-email-input {
+  flex: 1;
+  background: none;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #ffffff;
+  font-family: inherit;
+}
+
+.footer-email-input::placeholder {
+  color: #6b7280;
+}
+
+.footer-email-btn {
+  width: 38px;
+  height: 38px;
+  background-color: #2563EB;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  flex-shrink: 0;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.footer-email-btn:hover {
+  background-color: #1d4ed8;
+  transform: scale(1.05);
+}
+
+/* --- Footer Middle Row (email + socials) --- */
+.footer-middle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 32px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-email-link {
+  font-size: 15px;
+  color: #d1d5db;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.footer-email-link:hover {
+  color: #ffffff;
+}
+
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-social-btn {
+  color: #ffffff;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-social-btn:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+/* --- Footer Bottom Bar --- */
+.footer-bottom {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: #000000;
+}
+
+.footer-bottom-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.footer-copyright {
+  flex-shrink: 0;
+  min-width: 200px;
+}
+
+.footer-copyright span {
+  font-size: 11px;
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+.footer-copyright-link {
+  color: #3b82f6;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.footer-country-selector {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #9ca3af;
+  border: 1px solid #2a2a2e;
+  border-radius: 9999px;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.footer-country-selector:hover {
+  border-color: #4b5563;
+  color: #ffffff;
+}
+
+.footer-payments {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: auto;
+}
+
+.payment-icon {
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0.85;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+}
+
+.payment-icon:hover {
+  opacity: 1;
+}
+
+/* ============================================================
+   RESPONSIVE BREAKPOINTS */
 @media (max-width: 1200px) {
   .products-grid {
     grid-template-columns: repeat(3, 1fr);
@@ -878,6 +1168,32 @@ button {
     justify-content: center;
     gap: 16px;
   }
+  .footer-service-strip {
+    flex-direction: column;
+    gap: 20px;
+    padding: 28px 24px;
+  }
+  .footer-service-divider {
+    width: 100%;
+    height: 1px;
+  }
+  .footer-service-item {
+    padding: 0;
+  }
+  .footer-columns {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px 24px;
+  }
+  .footer-col-divider {
+    display: none;
+  }
+  .footer-col-wide {
+    grid-column: 1 / -1;
+    padding-left: 0;
+  }
+  .footer-main {
+    padding: 36px 24px 28px 24px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -893,5 +1209,32 @@ button {
     right: 0;
     bottom: 0;
     border-radius: 0;
+  }
+  .footer-service-strip {
+    padding: 24px 16px;
+  }
+  .footer-columns {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .footer-main {
+    padding: 28px 16px 20px 16px;
+  }
+  .footer-middle-row {
+    flex-direction: column;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .footer-bottom-inner {
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .footer-payments {
+    margin-left: 0;
+  }
+  .footer-mailing-title {
+    font-size: 18px;
   }
 }
