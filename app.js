@@ -8,6 +8,7 @@ const PRODUCTS = [
     category: 'tech',
     price: 70.00,
     currency: '£',
+    maxQty: 5,
     image: 'assets/lego_bugatti.jpg',
     description: 'Experience iconic engineering with the LEGO Technic Bugatti Chiron Pur Sport building set. Authentic aerodynamic bodywork and detailed W16 engine.'
   },
@@ -18,6 +19,7 @@ const PRODUCTS = [
     category: 'models',
     price: 70.00,
     currency: '£',
+    maxQty: 3,
     image: 'assets/bugatti_mistral.jpg',
     description: 'Precision 1:18 diecast replica of the ultimate Bugatti W16 Mistral roadster finished in gloss black with yellow luxury cockpit interior.'
   },
@@ -28,6 +30,7 @@ const PRODUCTS = [
     category: 'models',
     price: 70.00,
     currency: '£',
+    maxQty: 3,
     image: 'assets/bugatti_bolide.jpg',
     description: 'Track-focused hypercar 1:18 scale model of the Bugatti Bolide featuring aerodynamic wings and aggressive yellow carbon fiber scheme.'
   },
@@ -38,6 +41,7 @@ const PRODUCTS = [
     category: 'models',
     price: 70.00,
     currency: '£',
+    maxQty: 3,
     image: 'assets/bugatti_chiron.jpg',
     description: 'Authentic 1:18 scale diecast model of the Bugatti Chiron in signature French Racing Blue two-tone luxury finish.'
   },
@@ -48,6 +52,7 @@ const PRODUCTS = [
     category: 'tech',
     price: 35.00,
     currency: '£',
+    maxQty: 5,
     image: 'assets/lego-speed-champions-bugatti-vision-gran-turismo.webp',
     description: 'The Bugatti model car includes details from the vehicle created by Bugatti for the Gran Turismo video game in 2015. This includes a horseshoe front grille, rear wing, distinctive 8-eye headlights, a roof fin and wide tyres imprinted with ‘Michelin’. The toy car also includes a LEGO driver minifigure wearing a Bugatti outfit to place inside the cockpit to enjoy races.'
   },
@@ -58,6 +63,7 @@ const PRODUCTS = [
     category: 'models',
     price: 75.00,
     currency: '£',
+    maxQty: 3,
     image: 'assets/m28_dd0d3d5f-e9b1-4bfe-a4f1-6f757064f0a5.webp',
     description: 'A highly detailed 1:18 scale diecast model of the Bugatti Divo in grey (approx. 27cm). This replica beautifully recreates the bodywork of the car, with all curves and features exactly where you would find them on the original car.'
   },
@@ -68,6 +74,7 @@ const PRODUCTS = [
     category: 'tech',
     price: 55,
     currency: '£',
+    maxQty: 5,
     image: 'assets/legobolideyellow1.webp',
     description: 'The model car kit features a working W16 engine, steering and scissor doors. The stunning looks of the LEGO race car steal the show, with a yellow colour scheme and authentic sticker details. After building and exploring the car, kids (and adults alike) can display their collectible LEGO racing car with pride.'
   },
@@ -78,6 +85,7 @@ const PRODUCTS = [
     category: 'models',
     price: 70.00,
     currency: '£',
+    maxQty: 3,
     image: 'assets/m1_b4a52add-71a6-4115-b8c2-7c3a17861a31.webp',
     description: 'A highly detailed 1:18 scale diecast model of the Bugatti Bolide in blue (approx. 27cm). This replica beautifully recreates the bodywork of the car, with all curves and features exactly where you would find them on the original car.'
   },
@@ -88,6 +96,7 @@ const PRODUCTS = [
     category: 'accessories',
     price: 195.00,
     currency: '£',
+    maxQty: 2,
     image: 'assets/c5_ee7fb0ca-d3d4-4a2a-8bfe-f6fe0a1ae029.webp',
     description: 'Exclusive Champagne Carbon for Bugatti Chiron Edition. A premium collaboration between Champagne Carbon and Bugatti, presented in a sleek carbon-fiber wrapped magnum bottle with signature Bugatti orange accents and luxury gift box.'
   },
@@ -98,6 +107,7 @@ const PRODUCTS = [
     category: 'accessories',
     price: 195.00,
     currency: '£',
+    maxQty: 2,
     image: 'assets/c9_786d28de-c6c0-48cd-9b82-be1dbbf2e496.webp',
     description: 'Exclusive Champagne Carbon for Bugatti Bolide Edition. A bold blue carbon-fiber wrapped magnum bottle inspired by the Bolide hypercar, part of the prestigious Champagne Carbon x Bugatti collection. Arrives in an elegant black luxury gift box.'
   },
@@ -108,6 +118,7 @@ const PRODUCTS = [
     category: 'clothing',
     price: 65.00,
     currency: '£',
+    maxQty: 5,
     image: 'assets/navy-blue-t-shirt-bugatti-logo-25-1339.webp',
     description: 'Premium navy blue cotton T-shirt featuring the iconic Bugatti oval logo in light blue. A timeless wardrobe staple crafted from luxury-grade cotton with a relaxed, comfortable fit — perfect for everyday luxury wear.'
   },
@@ -118,6 +129,7 @@ const PRODUCTS = [
     category: 'clothing',
     price: 395.00,
     currency: '£',
+    maxQty: 2,
     image: 'assets/bugatti-eb-puffer-jacket.webp',
     description: 'The Bugatti EB Puffer Jacket in navy combines performance insulation with signature Bugatti styling. Features a hooded silhouette, quilted body, electric blue zip pullers, and an embroidered EB monogram badge — engineered for those who refuse to compromise on style or warmth.'
   },
@@ -128,6 +140,7 @@ const PRODUCTS = [
     category: 'lifestyle',
     price: 495.00,
     currency: '£',
+    maxQty: 2,
     image: 'assets/36C-BP-SS_Front.jpg',
     description: 'The Bugatti 36C Rimless Sunglasses in brushed silver and blue are the epitome of understated luxury. Featuring frameless mineral lenses in deep aqua blue, ultra-fine metal bridges, and the discreet Ettore Bugatti signature — a masterpiece of precision optical engineering.'
   },
@@ -138,10 +151,15 @@ const PRODUCTS = [
     category: 'lifestyle',
     price: 795.00,
     currency: '£',
+    maxQty: 2,
     image: 'assets/56-14K_Angle.jpg',
     description: 'The Bugatti 56 Aviator in 14K gold-plated titanium is crafted for those who demand the extraordinary. Double-bridge aviator silhouette with gradient green lenses and hand-polished gold temple arms — a timeless expression of automotive-inspired haute couture.'
   }
 ];
+
+function getMaxQty(product) {
+  return product.maxQty || 5;
+}
 
 // STATE
 let cart = [
@@ -446,9 +464,11 @@ function renderProductsGrid() {
   filtered.forEach(product => {
     const card = document.createElement('div');
     card.className = 'product-card';
+    const maxLimit = getMaxQty(product);
     card.innerHTML = `
       <div class="product-image-box">
         <img src="${product.image}" alt="${product.title}" loading="lazy">
+        <span class="limit-badge">Limit ${maxLimit}/order</span>
         <button class="quick-add-btn" data-id="${product.id}">Add to Cart</button>
       </div>
       <div class="product-info">
@@ -464,8 +484,9 @@ function renderProductsGrid() {
     card.addEventListener('click', (e) => {
       if (e.target.classList.contains('quick-add-btn')) {
         e.stopPropagation();
-        addToCart(product.id);
-        openCartDrawer();
+        if (addToCart(product.id)) {
+          openCartDrawer();
+        }
       } else {
         openQuickViewModal(product);
       }
@@ -488,18 +509,32 @@ function closeCartDrawer() {
   document.body.style.overflow = '';
 }
 
-function addToCart(productId) {
+function addToCart(productId, qtyToAdd = 1) {
+  const prod = PRODUCTS.find(p => p.id === productId);
+  if (!prod) return false;
+
+  const maxLimit = getMaxQty(prod);
   const existing = cart.find(item => item.product.id === productId);
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    const prod = PRODUCTS.find(p => p.id === productId);
-    if (prod) {
-      cart.push({ product: prod, quantity: 1 });
+  const currentQty = existing ? existing.quantity : 0;
+
+  if (currentQty + qtyToAdd > maxLimit) {
+    const remaining = Math.max(0, maxLimit - currentQty);
+    if (remaining === 0) {
+      showToast(`⚠ Order limit reached! Maximum ${maxLimit} allowed for this item.`);
+    } else {
+      showToast(`⚠ Limit exceeded! Only ${remaining} more allowed (Max limit: ${maxLimit}).`);
     }
+    return false;
+  }
+
+  if (existing) {
+    existing.quantity += qtyToAdd;
+  } else {
+    cart.push({ product: prod, quantity: qtyToAdd });
   }
   renderCartDrawer();
   showToast('Item added to cart');
+  return true;
 }
 
 function removeFromCart(productId) {
@@ -510,6 +545,11 @@ function removeFromCart(productId) {
 function updateQuantity(productId, delta) {
   const item = cart.find(i => i.product.id === productId);
   if (item) {
+    const maxLimit = getMaxQty(item.product);
+    if (delta > 0 && item.quantity + delta > maxLimit) {
+      showToast(`⚠ Maximum order limit of ${maxLimit} reached for this item!`);
+      return;
+    }
     item.quantity += delta;
     if (item.quantity <= 0) {
       removeFromCart(productId);
@@ -552,7 +592,6 @@ function renderCartDrawer() {
     } else if (disc.type === 'fixed') {
       discountedSubtotal = Math.max(0, subtotal - disc.value);
     }
-    // 'shipping' type doesn't change subtotal display
 
     if (disc.type !== 'shipping') {
       subtotalHTML = `
@@ -591,6 +630,8 @@ function renderCartDrawer() {
 
   itemsList.innerHTML = '';
   cart.forEach(item => {
+    const maxLimit = getMaxQty(item.product);
+    const isAtMax = item.quantity >= maxLimit;
     const row = document.createElement('div');
     row.className = 'cart-item';
     row.innerHTML = `
@@ -599,7 +640,10 @@ function renderCartDrawer() {
           <img src="${item.product.image}" alt="${item.product.title}">
         </div>
         <div class="cart-item-details">
-          <div class="cart-item-title">${item.product.title}</div>
+          <div class="cart-item-title">
+            ${item.product.title}
+            <span class="cart-item-limit-tag">Limit: ${maxLimit}</span>
+          </div>
           <div class="cart-item-price">${item.product.currency}${item.product.price.toFixed(2)}</div>
         </div>
       </div>
@@ -607,7 +651,7 @@ function renderCartDrawer() {
         <div class="qty-stepper">
           <span class="qty-val">${item.quantity}</span>
           <div class="qty-arrows">
-            <button class="qty-arrow-btn btn-inc" data-id="${item.product.id}">▲</button>
+            <button class="qty-arrow-btn btn-inc ${isAtMax ? 'disabled' : ''}" data-id="${item.product.id}" title="${isAtMax ? 'Maximum limit reached' : 'Increase quantity'}">▲</button>
             <button class="qty-arrow-btn btn-dec" data-id="${item.product.id}">▼</button>
           </div>
         </div>
@@ -682,6 +726,9 @@ function openQuickViewModal(product) {
   const modal = document.getElementById('product-modal');
   const backdrop = document.getElementById('modal-backdrop');
   const body = document.getElementById('modal-body');
+  const maxLimit = getMaxQty(product);
+
+  let modalQty = 1;
 
   body.innerHTML = `
     <div class="modal-img-wrapper">
@@ -692,14 +739,52 @@ function openQuickViewModal(product) {
       <h2 class="modal-title">${product.title}</h2>
       <div class="modal-price">${product.currency}${product.price.toFixed(2)}</div>
       <p class="modal-desc">${product.description}</p>
-      <button class="btn add-modal-btn" id="modal-add-btn">Add to Cart - ${product.currency}${product.price.toFixed(2)}</button>
+      
+      <!-- Quantity Selector & Limit Info -->
+      <div class="modal-qty-container">
+        <div class="modal-limit-tag">🔒 Purchase limit: Max ${maxLimit} per order</div>
+        <div class="modal-qty-row">
+          <span class="modal-qty-label">Quantity:</span>
+          <div class="modal-qty-controls">
+            <button class="modal-qty-btn" id="modal-qty-dec">-</button>
+            <span class="modal-qty-val" id="modal-qty-val">1</span>
+            <button class="modal-qty-btn" id="modal-qty-inc">+</button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn add-modal-btn" id="modal-add-btn">Add to Cart - ${product.currency}${(product.price * modalQty).toFixed(2)}</button>
     </div>
   `;
 
-  document.getElementById('modal-add-btn').addEventListener('click', () => {
-    addToCart(product.id);
-    closeModal();
-    openCartDrawer();
+  const decBtn = document.getElementById('modal-qty-dec');
+  const incBtn = document.getElementById('modal-qty-inc');
+  const qtyVal = document.getElementById('modal-qty-val');
+  const addBtn = document.getElementById('modal-add-btn');
+
+  decBtn.addEventListener('click', () => {
+    if (modalQty > 1) {
+      modalQty--;
+      qtyVal.textContent = modalQty;
+      addBtn.textContent = `Add to Cart - ${product.currency}${(product.price * modalQty).toFixed(2)}`;
+    }
+  });
+
+  incBtn.addEventListener('click', () => {
+    if (modalQty < maxLimit) {
+      modalQty++;
+      qtyVal.textContent = modalQty;
+      addBtn.textContent = `Add to Cart - ${product.currency}${(product.price * modalQty).toFixed(2)}`;
+    } else {
+      showToast(`⚠ Limit of ${maxLimit} items per order reached.`);
+    }
+  });
+
+  addBtn.addEventListener('click', () => {
+    if (addToCart(product.id, modalQty)) {
+      closeModal();
+      openCartDrawer();
+    }
   });
 
   modal.classList.add('open');
